@@ -42,7 +42,8 @@ export default function Dashboard() {
     const [activeModal, setActiveModal] = useState(null);
 
     useEffect(() => {
-        fetch('/api/hostaway')
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        fetch(`${baseUrl}/api/hostaway`)
             .then(res => res.json())
             .then(data => {
                 setReviews(data);
@@ -53,7 +54,7 @@ export default function Dashboard() {
     const toggleApproval = async (id, currentStatus) => {
         const newStatus = !currentStatus;
         setReviews(prev => prev.map(r => r.id === id ? { ...r, isApproved: newStatus } : r));
-        await fetch('/api/hostaway/update', {
+        await fetch(`${baseUrl}/api/hostaway/update`, {
             method: 'POST',
             body: JSON.stringify({ id, isApproved: newStatus })
         });

@@ -19,7 +19,8 @@ export default function PropertyDetails() {
     ];
 
     useEffect(() => {
-        fetch(`/api/property/${id}`)
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        fetch(`${baseUrl}/api/property/${id}`)
             .then(res => res.json())
             .then(data => {
                 setReviews(data);
