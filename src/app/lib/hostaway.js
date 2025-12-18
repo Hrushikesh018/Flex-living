@@ -1,4 +1,4 @@
-// lib/reviewEngine.js
+
 import fs from 'fs';
 import path from 'path';
 
@@ -8,7 +8,7 @@ export async function fetchAndNormalizeData() {
 
     console.log("🚀 Review Engine: Starting fetch sequence...");
 
-    // 1. Hostaway Handshake
+
     const tokenRes = await fetch('https://api.hostaway.com/v1/accessTokens', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -27,7 +27,7 @@ export async function fetchAndNormalizeData() {
     }
     console.log("✅ Auth Success: Token received.");
 
-    // 2. Get Raw Data
+
     const reviewsRes = await fetch('https://api.hostaway.com/v1/reviews', {
         headers: { Authorization: `Bearer ${tokenData.access_token}` }
     });
@@ -36,7 +36,7 @@ export async function fetchAndNormalizeData() {
     const apiResult = hostawayData.result || [];
     console.log(`📡 API Response: Received ${apiResult.length} raw reviews from Hostaway.`);
 
-    // 3. MERGE MOCK DATA (Safety net to ensure array is never empty)
+
     const mockData = [
         {
             id: 7453,
@@ -265,7 +265,7 @@ export async function fetchAndNormalizeData() {
     const rawItems = [...apiResult, ...mockData];
     console.log(`📦 Data Pool: Total of ${rawItems.length} items to normalize (API + Mock).`);
 
-    // 4. Handle Persistence (Approvals)
+
     let approvals = [];
     try {
         const filePath = path.join(process.cwd(), 'data', 'reviews.json');
@@ -280,7 +280,6 @@ export async function fetchAndNormalizeData() {
         console.error("❌ Persistence Error:", e.message);
     }
 
-    // 5. Normalize
     const normalized = rawItems.map((item, index) => {
         try {
             const catAvg = item.reviewCategory

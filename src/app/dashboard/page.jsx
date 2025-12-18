@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Star, AlertTriangle, Filter, LayoutDashboard, Settings, ChevronRight, Info, X } from 'lucide-react';
 import Link from 'next/link';
 
-// Premium Coming Soon Component
+
 const ComingSoonModal = ({ isOpen, onClose, featureName }) => {
     if (!isOpen) return null;
     return (
